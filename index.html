@@ -1,0 +1,1618 @@
+# 123<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Хюгге — Столовая с душой в Калининграде</title>
+    <link href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.1.1/index.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@fontsource/playfair-display@5.1.1/index.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --warm-cream: #FFF8F0;
+            --soft-brown: #8B6F47;
+            --deep-brown: #5C3D2E;
+            --accent-gold: #D4A853;
+            --warm-white: #FFFDF9;
+            --text-dark: #2D1B14;
+            --text-muted: #7A6555;
+            --light-taupe: #E8DDD3;
+            --soft-green: #6B8F71;
+            --bg-section: #F5EDE4;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-dark);
+            background: var(--warm-white);
+            overflow-x: hidden;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--warm-cream); }
+        ::-webkit-scrollbar-thumb { background: var(--soft-brown); border-radius: 4px; }
+
+        /* NAV */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.4s ease;
+        }
+
+        nav.scrolled {
+            background: rgba(255, 248, 240, 0.95);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 2px 30px rgba(92, 61, 46, 0.08);
+            padding: 0.7rem 2rem;
+        }
+
+        .nav-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--deep-brown);
+            text-decoration: none;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .nav-logo span {
+            color: var(--accent-gold);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-gold);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after { width: 100%; }
+        .nav-links a:hover { color: var(--soft-brown); }
+
+        .nav-phone {
+            background: var(--soft-brown);
+            color: white !important;
+            padding: 0.6rem 1.4rem;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s !important;
+        }
+
+        .nav-phone::after { display: none !important; }
+        .nav-phone:hover {
+            background: var(--deep-brown) !important;
+            transform: translateY(-1px);
+        }
+
+        .burger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .burger span {
+            width: 28px;
+            height: 2px;
+            background: var(--deep-brown);
+            transition: all 0.3s;
+        }
+
+        /* HERO */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+        }
+
+        .hero-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(45, 27, 20, 0.75) 0%, rgba(92, 61, 46, 0.5) 50%, rgba(45, 27, 20, 0.65) 100%);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            padding: 0 2rem;
+            margin-left: 8%;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(212, 168, 83, 0.2);
+            border: 1px solid rgba(212, 168, 83, 0.4);
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
+            color: var(--accent-gold);
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            backdrop-filter: blur(10px);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .hero-badge svg {
+            width: 16px;
+            height: 16px;
+            fill: var(--accent-gold);
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 6vw, 5.5rem);
+            color: white;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.8s ease 0.2s forwards;
+            opacity: 0;
+        }
+
+        .hero h1 em {
+            color: var(--accent-gold);
+            font-style: italic;
+        }
+
+        .hero-desc {
+            font-size: 1.15rem;
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.7;
+            margin-bottom: 2.5rem;
+            max-width: 550px;
+            animation: fadeInUp 0.8s ease 0.4s forwards;
+            opacity: 0;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease 0.6s forwards;
+            opacity: 0;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--accent-gold);
+            color: var(--text-dark);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background: #e0b55a;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(212, 168, 83, 0.4);
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: transparent;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            border: 2px solid rgba(255,255,255,0.3);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .btn-secondary:hover {
+            border-color: white;
+            background: rgba(255,255,255,0.1);
+        }
+
+        .hero-stats {
+            position: absolute;
+            bottom: 3rem;
+            right: 8%;
+            z-index: 2;
+            display: flex;
+            gap: 2rem;
+            animation: fadeInUp 0.8s ease 0.8s forwards;
+            opacity: 0;
+        }
+
+        .hero-stat {
+            text-align: center;
+            color: white;
+        }
+
+        .hero-stat-num {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent-gold);
+        }
+
+        .hero-stat-label {
+            font-size: 0.8rem;
+            opacity: 0.7;
+            margin-top: 0.3rem;
+        }
+
+        /* SECTIONS */
+        section {
+            padding: 6rem 2rem;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--soft-brown);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+
+        .section-tag::before,
+        .section-tag::after {
+            content: '';
+            width: 30px;
+            height: 1px;
+            background: var(--soft-brown);
+            opacity: 0.4;
+        }
+
+        .section-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            color: var(--deep-brown);
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        /* ABOUT */
+        .about {
+            background: var(--warm-white);
+        }
+
+        .about-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-images {
+            position: relative;
+            height: 500px;
+        }
+
+        .about-img-main {
+            width: 75%;
+            height: 80%;
+            object-fit: cover;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(92, 61, 46, 0.15);
+            position: relative;
+            z-index: 1;
+        }
+
+        .about-img-secondary {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 55%;
+            height: 55%;
+            object-fit: cover;
+            border-radius: 20px;
+            border: 5px solid var(--warm-white);
+            box-shadow: 0 15px 40px rgba(92, 61, 46, 0.12);
+            z-index: 2;
+        }
+
+        .about-float-card {
+            position: absolute;
+            top: 2rem;
+            right: 1rem;
+            background: white;
+            padding: 1.2rem 1.5rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(92, 61, 46, 0.1);
+            z-index: 3;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .about-float-card .stars {
+            color: var(--accent-gold);
+            font-size: 1.1rem;
+        }
+
+        .about-float-card .rating-num {
+            font-weight: 800;
+            font-size: 1.4rem;
+            color: var(--deep-brown);
+        }
+
+        .about-float-card .rating-text {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .about-text h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--deep-brown);
+            margin-bottom: 1.5rem;
+            line-height: 1.3;
+        }
+
+        .about-text p {
+            color: var(--text-muted);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .about-feature {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            padding: 0.8rem 1rem;
+            background: var(--bg-section);
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .about-feature-icon {
+            width: 36px;
+            height: 36px;
+            background: white;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        /* MENU */
+        .menu {
+            background: var(--bg-section);
+        }
+
+        .menu-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .menu-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 20px rgba(92, 61, 46, 0.06);
+        }
+
+        .menu-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(92, 61, 46, 0.12);
+        }
+
+        .menu-card-img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .menu-card-body {
+            padding: 1.5rem;
+        }
+
+        .menu-card-category {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--soft-brown);
+            margin-bottom: 0.5rem;
+        }
+
+        .menu-card-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: var(--deep-brown);
+            margin-bottom: 0.5rem;
+        }
+
+        .menu-card-desc {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .menu-card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .menu-card-price {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--soft-brown);
+        }
+
+        .menu-card-price span {
+            font-size: 0.85rem;
+            font-weight: 400;
+            color: var(--text-muted);
+        }
+
+        .menu-card-badge {
+            background: var(--accent-gold);
+            color: var(--text-dark);
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        /* FEATURES */
+        .features {
+            background: var(--deep-brown);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .features::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(212, 168, 83, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .features .section-header h2 { color: white; }
+        .features .section-header p { color: rgba(255,255,255,0.6); }
+        .features .section-tag { color: var(--accent-gold); }
+        .features .section-tag::before,
+        .features .section-tag::after { background: var(--accent-gold); }
+
+        .features-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .feature-card {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .feature-card:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(212, 168, 83, 0.15);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .feature-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .feature-card p {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.6);
+            line-height: 1.6;
+        }
+
+        /* REVIEWS */
+        .reviews {
+            background: var(--warm-white);
+        }
+
+        .reviews-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 2rem;
+        }
+
+        .review-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(92, 61, 46, 0.06);
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .review-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 35px rgba(92, 61, 46, 0.1);
+        }
+
+        .review-card::before {
+            content: '"';
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            color: var(--light-taupe);
+            line-height: 1;
+        }
+
+        .review-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .review-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--bg-section);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--soft-brown);
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .review-info h4 {
+            font-size: 0.95rem;
+            color: var(--deep-brown);
+        }
+
+        .review-level {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .review-stars {
+            color: var(--accent-gold);
+            font-size: 0.85rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .review-text {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        .review-date {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 1rem;
+            opacity: 0.7;
+        }
+
+        .review-rating-summary {
+            max-width: 1200px;
+            margin: 0 auto 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3rem;
+            padding: 2rem;
+            background: var(--bg-section);
+            border-radius: 20px;
+        }
+
+        .rating-big {
+            text-align: center;
+        }
+
+        .rating-big-num {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            font-weight: 700;
+            color: var(--deep-brown);
+            line-height: 1;
+        }
+
+        .rating-big-stars {
+            color: var(--accent-gold);
+            font-size: 1.2rem;
+            margin: 0.5rem 0;
+        }
+
+        .rating-big-count {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .rating-bars {
+            flex: 1;
+            max-width: 300px;
+        }
+
+        .rating-bar-row {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .rating-bar-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            min-width: 20px;
+            text-align: right;
+        }
+
+        .rating-bar-track {
+            flex: 1;
+            height: 8px;
+            background: var(--light-taupe);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .rating-bar-fill {
+            height: 100%;
+            background: var(--accent-gold);
+            border-radius: 4px;
+            transition: width 1.5s ease;
+        }
+
+        /* HOURS */
+        .hours {
+            background: var(--bg-section);
+        }
+
+        .hours-container {
+            max-width: 800px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        .hours-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 4px 20px rgba(92, 61, 46, 0.06);
+        }
+
+        .hours-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--deep-brown);
+            margin-bottom: 1.5rem;
+        }
+
+        .hours-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.7rem 0;
+            border-bottom: 1px solid var(--light-taupe);
+            font-size: 0.9rem;
+        }
+
+        .hours-row:last-child { border-bottom: none; }
+
+        .hours-day {
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .hours-time {
+            color: var(--soft-green);
+            font-weight: 600;
+        }
+
+        .hours-time.closed {
+            color: #c0392b;
+        }
+
+        .contact-info-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--deep-brown);
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-icon {
+            width: 44px;
+            height: 44px;
+            background: var(--bg-section);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .contact-item-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.2rem;
+        }
+
+        .contact-item-value {
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 0.95rem;
+        }
+
+        .contact-item-value a {
+            color: var(--soft-brown);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .contact-item-value a:hover { color: var(--deep-brown); }
+
+        /* MAP */
+        .map-section {
+            position: relative;
+        }
+
+        .map-placeholder {
+            width: 100%;
+            height: 400px;
+            background: var(--light-taupe);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .map-placeholder iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .map-overlay-card {
+            position: absolute;
+            bottom: 2rem;
+            left: 2rem;
+            background: white;
+            padding: 1.5rem 2rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            z-index: 10;
+        }
+
+        .map-overlay-card h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            color: var(--deep-brown);
+            margin-bottom: 0.3rem;
+        }
+
+        .map-overlay-card p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .map-overlay-card a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--soft-brown);
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .map-overlay-card a:hover { color: var(--deep-brown); }
+
+        /* CTA */
+        .cta {
+            background: linear-gradient(135deg, var(--deep-brown) 0%, #7a5240 100%);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .cta p {
+            color: rgba(255,255,255,0.7);
+            font-size: 1.1rem;
+            margin-bottom: 2.5rem;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta .btn-primary {
+            font-size: 1.05rem;
+            padding: 1.1rem 2.5rem;
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--text-dark);
+            color: rgba(255,255,255,0.6);
+            padding: 3rem 2rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .footer-logo span { color: var(--accent-gold); }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.5);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover { color: var(--accent-gold); }
+
+        .footer-copy {
+            font-size: 0.8rem;
+            opacity: 0.5;
+        }
+
+        /* ANIMATIONS */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s ease;
+        }
+
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* MOBILE */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background: var(--warm-cream);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 2rem;
+                transition: right 0.4s ease;
+                box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+            }
+
+            .nav-links.open { right: 0; }
+
+            .burger { display: flex; }
+            .burger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+            .burger.active span:nth-child(2) { opacity: 0; }
+            .burger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+            .hero-content { margin-left: 5%; }
+            .hero-stats { display: none; }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .about-images { height: 350px; }
+
+            .about-features { grid-template-columns: 1fr; }
+
+            .hours-container { grid-template-columns: 1fr; }
+
+            .reviews-container { grid-template-columns: 1fr; }
+
+            .review-rating-summary {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .map-overlay-card {
+                bottom: 1rem;
+                left: 1rem;
+                right: 1rem;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .footer-links { flex-wrap: wrap; justify-content: center; }
+        }
+
+        @media (max-width: 480px) {
+            section { padding: 4rem 1.2rem; }
+            .hero-buttons { flex-direction: column; }
+            .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
+        }
+
+        /* Smooth scroll */
+        html { scroll-behavior: smooth; }
+
+        /* Status indicator */
+        .status-open {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: var(--soft-green);
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--soft-green);
+            animation: pulse 2s infinite;
+        }
+
+        .status-closed {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: #c0392b;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        /* Price range display */
+        .price-display {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            margin-top: 0.5rem;
+        }
+
+        .price-bar {
+            width: 30px;
+            height: 4px;
+            border-radius: 2px;
+            background: var(--light-taupe);
+        }
+
+        .price-bar.active {
+            background: var(--soft-brown);
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+    <a href="#" class="nav-logo">Хюгге<span>.</span></a>
+    <ul class="nav-links" id="navLinks">
+        <li><a href="#about" onclick="closeMenu()">О нас</a></li>
+        <li><a href="#menu" onclick="closeMenu()">Меню</a></li>
+        <li><a href="#features" onclick="closeMenu()">Преимущества</a></li>
+        <li><a href="#reviews" onclick="closeMenu()">Отзывы</a></li>
+        <li><a href="#contact" onclick="closeMenu()">Контакты</a></li>
+        <li><a href="tel:+79673565261" class="nav-phone" onclick="closeMenu()">📞 Позвонить</a></li>
+    </ul>
+    <div class="burger" id="burger" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-bg">
+        <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1920&q=80" alt="Уютная столовая">
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        <div class="hero-badge">
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            Рейтинг 5,0 · 326 оценок
+        </div>
+        <h1>Столовая <em>«Хюгге»</em></h1>
+        <p class="hero-desc">Место, где можно вкусно и&nbsp;сытно поесть по&nbsp;доступным ценам. Домашняя еда с&nbsp;датской душой в&nbsp;самом сердце Калининграда.</p>
+        <div class="hero-buttons">
+            <a href="tel:+79673565261" class="btn-primary">📞 +7 (967) 356-52-61</a>
+            <a href="#menu" class="btn-secondary">Наше меню ↓</a>
+        </div>
+    </div>
+    <div class="hero-stats">
+        <div class="hero-stat">
+            <div class="hero-stat-num">326</div>
+            <div class="hero-stat-label">отзывов</div>
+        </div>
+        <div class="hero-stat">
+            <div class="hero-stat-num">5.0</div>
+            <div class="hero-stat-label">рейтинг</div>
+        </div>
+        <div class="hero-stat">
+            <div class="hero-stat-num">250₽</div>
+            <div class="hero-stat-label">средний чек</div>
+        </div>
+    </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+    <div class="about-grid">
+        <div class="about-images animate-on-scroll">
+            <img class="about-img-main" src="https://images.unsplash.com/photo-1567521464027-f127ff543834?w=800&q=80" alt="Интерьер столовой">
+            <img class="about-img-secondary" src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600&q=80" alt="Домашняя еда">
+            <div class="about-float-card">
+                <div>
+                    <div class="rating-num">5.0</div>
+                    <div class="stars">★★★★★</div>
+                    <div class="rating-text">326 оценок</div>
+                </div>
+            </div>
+        </div>
+        <div class="about-text animate-on-scroll">
+            <div class="section-tag">О нас</div>
+            <h3>Домашняя еда, приготовленная с&nbsp;заботой</h3>
+            <p>Столовая «Хюгге» — это место, где каждый чувствует себя как дома. Мы готовим простую, но вкусную домашнюю еду с придумкой. У нас вы найдёте и классические блюда, и неожиданные сочетания вроде перловки с соусом песто.</p>
+            <p>Нас любят не только гости города, но и местные жители. Приходите за порцией уюта и сытным обедом!</p>
+            <div class="about-features">
+                <div class="about-feature">
+                    <div class="about-feature-icon">🍽️</div>
+                    Самообслуживание
+                </div>
+                <div class="about-feature">
+                    <div class="about-feature-icon">📦</div>
+                    Еда навынос
+                </div>
+                <div class="about-feature">
+                    <div class="about-feature-icon">💰</div>
+                    Средний чек 50–500 ₽
+                </div>
+                <div class="about-feature">
+                    <div class="about-feature-icon">👨‍👩‍👧‍👦</div>
+                    Семейное место
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- MENU -->
+<section class="menu" id="menu">
+    <div class="section-header animate-on-scroll">
+        <div class="section-tag">Меню</div>
+        <h2>Наши популярные блюда</h2>
+        <p>Домашняя кухня по доступным ценам. Каждый день свежее меню из любимых блюд</p>
+    </div>
+    <div class="menu-grid">
+        <div class="menu-card animate-on-scroll">
+            <img class="menu-card-img" src="https://images.unsplash.com/photo-1547592166-23ac45744acd?w=600&q=80" alt="Лагман">
+            <div class="menu-card-body">
+                <div class="menu-card-category">Супы</div>
+                <div class="menu-card-title">Лагман с говядиной</div>
+                <div class="menu-card-desc">Наваристый лагман с нежной говядиной, овощами и домашней лапшой. Увесистая порция на весь обед.</div>
+                <div class="menu-card-footer">
+                    <div class="menu-card-price">250 ₽</div>
+                    <div class="menu-card-badge">Хит</div>
+                </div>
+            </div>
+        </div>
+        <div class="menu-card animate-on-scroll">
+            <img class="menu-card-img" src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=600&q=80" alt="Перловка">
+            <div class="menu-card-body">
+                <div class="menu-card-category">Горячее</div>
+                <div class="menu-card-title">Перловка с песто</div>
+                <div class="menu-card-desc">Домашняя еда с придумкой — перловка с ароматным соусом песто. Просто, вкусно и необычно.</div>
+                <div class="menu-card-footer">
+                    <div class="menu-card-price">180 ₽</div>
+                    <div class="menu-card-badge">Новинка</div>
+                </div>
+            </div>
+        </div>
+        <div class="menu-card animate-on-scroll">
+            <img class="menu-card-img" src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=600&q=80" alt="Выпечка">
+            <div class="menu-card-body">
+                <div class="menu-card-category">Десерты</div>
+                <div class="menu-card-title">Свежая выпечка</div>
+                <div class="menu-card-desc">Каждый день свежая выпечка и сладости. Ароматные булочки, пироги и десерты к чаю.</div>
+                <div class="menu-card-footer">
+                    <div class="menu-card-price">от 50 ₽</div>
+                    <div class="menu-card-badge">Ежедневно</div>
+                </div>
+            </div>
+        </div>
+        <div class="menu-card animate-on-scroll">
+            <img class="menu-card-img" src="https://images.unsplash.com/photo-1547592166-23ac45744acd?w=600&q=80" alt="Борщ">
+            <div class="menu-card-body">
+                <div class="menu-card-category">Супы</div>
+                <div class="menu-card-title">Борщ домашний</div>
+                <div class="menu-card-desc">Классический борщ по домашнему рецепту — наваристый, ароматный, со сметаной и свежей зеленью.</div>
+                <div class="menu-card-footer">
+                    <div class="menu-card-price">150 ₽</div>
+                    <div class="menu-card-badge">Классика</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+    <div class="section-header animate-on-scroll">
+        <div class="section-tag">Преимущества</div>
+        <h2>Почему выбирают нас</h2>
+        <p>Хюгге — это не просто столовая, это ощущение дома</p>
+    </div>
+    <div class="features-grid">
+        <div class="feature-card animate-on-scroll">
+            <div class="feature-icon">🏠</div>
+            <h3>Домашняя атмосфера</h3>
+            <p>Уютный интерьер в скандинавском стиле, где каждый чувствует себя как дома</p>
+        </div>
+        <div class="feature-card animate-on-scroll">
+            <div class="feature-icon">💰</div>
+            <h3>Доступные цены</h3>
+            <p>Средний чек от 50 до 500 ₽. Сытный обед по цене, которая не ударит по кошельку</p>
+        </div>
+        <div class="feature-card animate-on-scroll">
+            <div class="feature-icon">👨‍🍳</div>
+            <h3>Свежая еда каждый день</h3>
+            <p>Готовим из свежих продуктов каждое утро. Никаких полуфабрикатов — только домашняя кухня</p>
+        </div>
+        <div class="feature-card animate-on-scroll">
+            <div class="feature-icon">📦</div>
+            <h3>Еда навынос</h3>
+            <p>Закажите обед с собой — удобно для тех, кто ценит своё время и любит домашнюю еду</p>
+        </div>
+    </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews" id="reviews">
+    <div class="section-header animate-on-scroll">
+        <div class="section-tag">Отзывы</div>
+        <h2>Что говорят наши гости</h2>
+        <p>187 отзывов с рейтингом 5,0 — нам доверяют сотни гостей</p>
+    </div>
+
+    <div class="review-rating-summary animate-on-scroll">
+        <div class="rating-big">
+            <div class="rating-big-num">5.0</div>
+            <div class="rating-big-stars">★★★★★</div>
+            <div class="rating-big-count">326 оценок</div>
+        </div>
+        <div class="rating-bars">
+            <div class="rating-bar-row">
+                <span class="rating-bar-label">5</span>
+                <div class="rating-bar-track"><div class="rating-bar-fill" style="width: 95%"></div></div>
+            </div>
+            <div class="rating-bar-row">
+                <span class="rating-bar-label">4</span>
+                <div class="rating-bar-track"><div class="rating-bar-fill" style="width: 3%"></div></div>
+            </div>
+            <div class="rating-bar-row">
+                <span class="rating-bar-label">3</span>
+                <div class="rating-bar-track"><div class="rating-bar-fill" style="width: 1%"></div></div>
+            </div>
+            <div class="rating-bar-row">
+                <span class="rating-bar-label">2</span>
+                <div class="rating-bar-track"><div class="rating-bar-fill" style="width: 0.5%"></div></div>
+            </div>
+            <div class="rating-bar-row">
+                <span class="rating-bar-label">1</span>
+                <div class="rating-bar-track"><div class="rating-bar-fill" style="width: 0.5%"></div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="reviews-container">
+        <div class="review-card animate-on-scroll">
+            <div class="review-header">
+                <div class="review-avatar">ОБ</div>
+                <div class="review-info">
+                    <h4>Ольга Б.</h4>
+                    <div class="review-level">Знаток города 7 уровня</div>
+                </div>
+            </div>
+            <div class="review-stars">★★★★★</div>
+            <div class="review-text">Атмосфера в самое 🤍 По столовской цене вы получите очень вкусную домашнюю еду, выпечка и сладостей много. Кушала лагман с говядины за 250 р — прекрасен и порция увесистая.</div>
+            <div class="review-date">17 декабря 2024</div>
+        </div>
+        <div class="review-card animate-on-scroll">
+            <div class="review-header">
+                <div class="review-avatar">ОС</div>
+                <div class="review-info">
+                    <h4>Олег С.</h4>
+                    <div class="review-level">Знаток города 12 уровня</div>
+                </div>
+            </div>
+            <div class="review-stars">★★★★★</div>
+            <div class="review-text">Приятные и приветливые сотрудники, одним словом — отличное место) Домашняя еда довольно простая, но с придумкой, например, перловка с соусом песто. Плотно пообедал тут за 500 рублей. Рекомендую!</div>
+            <div class="review-date">14 января 2025</div>
+        </div>
+        <div class="review-card animate-on-scroll">
+            <div class="review-header">
+                <div class="review-avatar">АС</div>
+                <div class="review-info">
+                    <h4>Андрей Сиротинский</h4>
+                    <div class="review-level">Знаток города 30 уровня</div>
+                </div>
+            </div>
+            <div class="review-stars">★★★★★</div>
+            <div class="review-text">Реально хорошая столовая в самом лучшем понимании этого слова. Место любимое не только и не столько гостями города, сколько местными жителями. Просто, вкусно, по-домашнему.</div>
+            <div class="review-date">23 июля 2025</div>
+        </div>
+    </div>
+</section>
+
+<!-- HOURS & CONTACT -->
+<section class="hours" id="contact">
+    <div class="section-header animate-on-scroll">
+        <div class="section-tag">Контакты</div>
+        <h2>Как нас найти</h2>
+        <p>Ждём вас в гости каждый день</p>
+    </div>
+    <div class="hours-container">
+        <div class="hours-card animate-on-scroll">
+            <h3>График работы</h3>
+            <div class="hours-row">
+                <span class="hours-day">Понедельник</span>
+                <span class="hours-time">09:00 – 20:00</span>
+            </div>
+            <div class="hours-row">
+                <span class="hours-day">Вторник</span>
+                <span class="hours-time">09:00 – 20:00</span>
+            </div>
+            <div class="hours-row">
+                <span class="hours-day">Среда</span>
+                <span class="hours-time">09:00 – 20:00</span>
+            </div>
+            <div class="hours-row">
+                <span class="hours-day">Четверг</span>
+                <span class="hours-time">09:00 – 20:00</span>
+            </div>
+            <div class="hours-row">
+                <span class="hours-day">Пятница</span>
+                <span class="hours-time">09:00 – 20:00</span>
+            </div>
+            <div class="hours-row">
+                <span class="hours-day">Суббота</span>
+                <span class="hours-time">10:00 – 19:00</span>
+            </div>
+            <div class="hours-row">
+                <span class="hours-day">Воскресенье</span>
+                <span class="hours-time closed">Выходной</span>
+            </div>
+            <div style="margin-top: 1.5rem;">
+                <div id="statusIndicator"></div>
+            </div>
+        </div>
+        <div class="hours-card animate-on-scroll">
+            <h3>Контактная информация</h3>
+            <div class="contact-item">
+                <div class="contact-icon">📍</div>
+                <div>
+                    <div class="contact-item-label">Адрес</div>
+                    <div class="contact-item-value">Гаражная ул., 2, Калининград</div>
+                </div>
+            </div>
+            <div class="contact-item">
+                <div class="contact-icon">📞</div>
+                <div>
+                    <div class="contact-item-label">Телефон</div>
+                    <div class="contact-item-value"><a href="tel:+79673565261">+7 (967) 356-52-61</a></div>
+                </div>
+            </div>
+            <div class="contact-item">
+                <div class="contact-icon">💳</div>
+                <div>
+                    <div class="contact-item-label">Цены</div>
+                    <div class="contact-item-value">Средний чек: 50–500 ₽</div>
+                </div>
+            </div>
+            <div class="contact-item">
+                <div class="contact-icon">🏷️</div>
+                <div>
+                    <div class="contact-item-label">Тип</div>
+                    <div class="contact-item-value">Столовая, самообслуживание</div>
+                </div>
+            </div>
+            <div class="contact-item">
+                <div class="contact-icon">📦</div>
+                <div>
+                    <div class="contact-item-label">Формат</div>
+                    <div class="contact-item-value">Еда навынос, обед в зале</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- MAP -->
+<div class="map-section">
+    <div class="map-placeholder">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2200.5!2d20.505!3d54.7104!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zR2FyYXpobmF5YSB1bC4sIDIsIEthbGluaW5ncmFk!5e0!3m2!1sru!2sru!4v1700000000000!5m2!1sru!2sru" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+    <div class="map-overlay-card">
+        <h4>📍 Столовая «Хюгге»</h4>
+        <p>Гаражная ул., 2, Калининград</p>
+        <a href="https://yandex.ru/maps/?text=Гаражная+ул+2+Калининград" target="_blank">
+            Построить маршрут →
+        </a>
+    </div>
+</div>
+
+<!-- CTA -->
+<section class="cta">
+    <div class="cta-content animate-on-scroll">
+        <h2>Приходите за порцией уюта</h2>
+        <p>Домашняя еда, тёплая атмосфера и доступные цены ждут вас каждый день</p>
+        <a href="tel:+79673565261" class="btn-primary">📞 Позвонить нам</a>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-content">
+        <div class="footer-logo">Хюгге<span>.</span></div>
+        <ul class="footer-links">
+            <li><a href="#about">О нас</a></li>
+            <li><a href="#menu">Меню</a></li>
+            <li><a href="#reviews">Отзывы</a></li>
+            <li><a href="#contact">Контакты</a></li>
+        </ul>
+        <div class="footer-copy">© 2026 Столовая «Хюгге». Калининград.</div>
+    </div>
+</footer>
+
+<script>
+    // Navbar scroll
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+        navbar.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    // Mobile menu
+    function toggleMenu() {
+        document.getElementById('navLinks').classList.toggle('open');
+        document.getElementById('burger').classList.toggle('active');
+    }
+
+    function closeMenu() {
+        document.getElementById('navLinks').classList.remove('open');
+        document.getElementById('burger').classList.remove('active');
+    }
+
+    // Scroll animations
+    const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+
+    // Status indicator
+    function updateStatus() {
+        const now = new Date();
+        const day = now.getDay(); // 0=Sun, 1=Mon, ...
+        const hour = now.getHours();
+        const indicator = document.getElementById('statusIndicator');
+
+        let isOpen = false;
+
+        if (day === 0) { // Sunday
+            isOpen = false;
+        } else if (day === 6) { // Saturday
+            isOpen = hour >= 10 && hour < 19;
+        } else { // Mon-Fri
+            isOpen = hour >= 9 && hour < 20;
+        }
+
+        if (isOpen) {
+            indicator.innerHTML = '<span class="status-open"><span class="status-dot"></span> Сейчас открыто</span>';
+        } else {
+            const nextDay = getNextOpenDay();
+            indicator.innerHTML = `<span class="status-closed"><span class="status-dot" style="background:#c0392b;animation:none"></span> Закрыто · ${nextDay}</span>`;
+        }
+    }
+
+    function getNextOpenDay() {
+        const now = new Date();
+        const day = now.getDay();
+        const hour = now.getHours();
+
+        if (day === 0) return 'Откроется в понедельник';
+        if (day === 6 && hour >= 19) return 'Откроется в понедельник';
+        if (hour >= 20 || hour < 9) {
+            const days = ['в воскресенье', 'в понедельник', 'во вторник', 'в среду', 'в четверг', 'в пятницу', 'в субботу'];
+            let next = day + 1;
+            if (next === 0) next = 1; // skip Sunday
+            return `Откроется ${days[next]}`;
+        }
+        return 'Закрыто';
+    }
+
+    updateStatus();
+    setInterval(updateStatus, 60000);
+</script>
+
+</body>
+</html>
+
